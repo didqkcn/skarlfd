@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>남길아 힘내</title>
+    <!-- Tailwind CSS CDN 로드 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 기본 글꼴 설정 */
+        body {
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f7f7f7; /* 밝은 배경 */
+        }
+        /* 타이핑되는 텍스트를 위한 깜빡이는 커서 효과 */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 0.7s infinite;
+            margin-left: 2px;
+            font-weight: 300;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 텍스트가 표시될 영역 -->
+    <div id="typing-text" class="text-5xl md:text-6xl font-bold text-gray-800 p-8 rounded-xl bg-white shadow-2xl transition duration-300 transform hover:scale-105">
+        <!-- JavaScript가 여기에 텍스트를 한 글자씩 추가합니다. -->
+    </div>
+
+    <script>
+        // 목표 문구 정의
+        const textToType = "남길아 힘내";
+        const element = document.getElementById('typing-text');
+        const typingSpeed = 250; // 글자당 밀리초 (0.25초)
+
+        /**
+         * 지정된 문자열을 한 글자씩 타이핑 효과로 표시하는 함수
+         * @param {number} index - 현재 타이핑할 문자열의 인덱스
+         */
+        function typeEffect(index) {
+            // 커서 클래스를 추가하여 깜빡이는 효과를 줍니다.
+            element.classList.add('typing-cursor');
+
+            if (index < textToType.length) {
+                // 현재 문자를 요소에 추가합니다.
+                element.textContent += textToType.charAt(index);
+
+                // 다음 문자를 타이핑하기 위해 setTimeout을 사용하여 재귀 호출합니다.
+                setTimeout(() => {
+                    typeEffect(index + 1);
+                }, typingSpeed);
+            } else {
+                // 타이핑이 완료되면 커서 클래스를 제거하여 깜빡임을 멈춥니다.
+                element.classList.remove('typing-cursor');
+            }
+        }
+
+        // 웹페이지 로드 시 타이핑 효과 시작
+        window.onload = function() {
+            // 시작 전 텍스트를 비웁니다.
+            element.textContent = '';
+            // 타이핑 효과를 시작합니다.
+            typeEffect(0);
+        };
+    </script>
+
+</body>
+</html>
